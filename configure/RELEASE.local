@@ -1,0 +1,2 @@
+EPICS_BASE=/opt/EPICS/base
+PVXS=/opt/EPICS/modules/pvxs

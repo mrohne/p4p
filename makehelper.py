@@ -5,6 +5,7 @@ Set some python derived Makefile variables.
 Emits something like the following
 
 PY_OK := YES  # indicates success of this script
+HAVE_NUMPY := YES/NO
 PY_VER := 2.6
 PY_INCDIRS := /path ...
 PY_LIBDIRS := /path ...
@@ -33,12 +34,13 @@ except ImportError:
 incdirs = [get_python_inc()]
 libdir = get_config_var('LIBDIR') or ''
 
+have_np='NO'
 try:
-    from numpy.distutils.misc_util import get_numpy_include_dirs
+    import numpy
+    incdirs = [numpy.get_include()]+incdirs
+    have_np='YES'
 except ImportError:
-    def get_numpy_include_dirs():
-        from numpy import get_include
-        return [get_include()]
+    pass
 
 incdirs = get_numpy_include_dirs()+incdirs
 

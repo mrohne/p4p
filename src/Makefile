@@ -12,6 +12,8 @@ INSTALL_SHRLIB = $(PY_INSTALL_DIR)/p4p
 
 LOADABLE_LIBRARY_HOST += _p4p
 
+PROD_LIBS += pvxs Com
+
 _p4p_CPPFLAGS += -DPY_ARRAY_UNIQUE_SYMBOL=PVXS_PyArray_API
 pvxs_value_CPPFLAGS += -DPY_ARRAY_UNIQUE_SYMBOL=PVXS_PyArray_API
 
@@ -24,8 +26,6 @@ _p4p_SRCS += pvxs_client.cpp
 
 _p4p_CPPFLAGS += -DPVXS_ENABLE_EXPERT_API
 
-_p4p_LIBS += pvxs Com
-
 LOADABLE_LIBRARY_HOST += _gw
 
 _gw_CPPFLAGS += -DPVXS_ENABLE_EXPERT_API
@@ -33,8 +33,6 @@ _gw_CPPFLAGS += -DPVXS_ENABLE_EXPERT_API
 _gw_SRCS += _gw.cpp
 _gw_SRCS += pvxs_gw.cpp
 _gw_SRCS += pvxs_odometer.cpp
-
-_gw_LIBS += pvxs Com
 
 PY += p4p/__init__.py
 PY += p4p/disect.py
