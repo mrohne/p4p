@@ -6,6 +6,8 @@ Emits something like the following
 
 PY_OK := YES  # indicates success of this script
 PY_VER := 2.6
+HAVE_NUMPY := YES/NO
+PY_VER := 2.6
 PY_INCDIRS := /path ...
 PY_LIBDIRS := /path ...
 """
@@ -25,14 +27,18 @@ else:
         pass
     out = open(sys.argv[1], 'w')
 
-try:
-    from sysconfig import get_config_var, get_python_inc
-except ImportError:
-    from distutils.sysconfig import get_config_var, get_python_inc
+from sysconfig import get_config_var, get_path
 
-incdirs = [get_python_inc()]
+incdirs = [get_path('include')]
 libdir = get_config_var('LIBDIR') or ''
 
+have_np='NO'
+try:
+    import numpy
+    incdirs = [numpy.get_include()]+incdirs
+    have_np='YES'
+except ImportError:
+    pass
 
 def get_numpy_include_dirs():
     from numpy import get_include
