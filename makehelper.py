@@ -6,6 +6,8 @@ Emits something like the following
 
 PY_OK := YES  # indicates success of this script
 PY_VER := 2.6
+HAVE_NUMPY := YES/NO
+PY_VER := 2.6
 PY_INCDIRS := /path ...
 PY_LIBDIRS := /path ...
 """
@@ -13,6 +15,7 @@ PY_LIBDIRS := /path ...
 from __future__ import print_function
 
 import sys
+import errno
 import os
 
 if len(sys.argv)<2:
@@ -24,12 +27,18 @@ else:
         pass
     out = open(sys.argv[1], 'w')
 
+from sysconfig import get_config_var, get_path
+
+incdirs = [get_path('include')]
+libdir = get_config_var('LIBDIR') or ''
+
+have_np='NO'
 try:
-    from sysconfig import get_config_var, get_path
-    def get_python_inc():
-        return get_path('include')
+    import numpy
+    incdirs = [numpy.get_include()]+incdirs
+    have_np='YES'
 except ImportError:
-    from distutils.sysconfig import get_config_var, get_python_inc
+    pass
 
 def gcv(name, *dflt):
     v = get_config_var(name)
