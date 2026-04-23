@@ -30,7 +30,6 @@ else:
 from sysconfig import get_config_var, get_path
 
 incdirs = [get_path('include')]
-libdir = get_config_var('LIBDIR') or ''
 
 have_np='NO'
 try:
@@ -48,7 +47,6 @@ def gcv(name, *dflt):
         raise KeyError(name)
     return v
 
-incdirs = [get_python_inc()]
 libdir = gcv('LIBDIR', '') or gcv('prefix') + '/libs'
 
 
